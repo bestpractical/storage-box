@@ -1,13 +1,10 @@
+# vim: ai ts=4 sts=4 et sw=4 ft=perl
+
 package Storage::Box;
 
 use Modern::Perl;
 our $VERSION = '0.01';
-
-
-
-
-1;
-__END__
+=pod 
 
 =encoding utf-8
 
@@ -22,6 +19,14 @@ Storage::Box - Blah blah blah
 =head1 DESCRIPTION
 
 Storage::Box is 
+
+=head1 METHODS
+
+=cut
+
+
+
+=pod
 
 =head1 AUTHOR
 
@@ -39,3 +44,7 @@ it under the same terms as Perl itself.
 =head1 SEE ALSO
 
 =cut
+
+1;
+
+

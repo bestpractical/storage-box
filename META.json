@@ -38,7 +38,9 @@
       "runtime" : {
          "requires" : {
             "Crypt::JWT" : "0.017",
+            "Data::UUID" : "1.221",
             "Expect" : "1.15",
+            "HTTP::Request" : "6.11",
             "Modern::Perl" : "1.20150127",
             "perl" : "5.008005"
          }
@@ -50,6 +52,17 @@
       }
    },
    "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/cthulhuology/Storage-Box/issues"
+      },
+      "homepage" : "https://github.com/cthulhuology/Storage-Box",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/cthulhuology/Storage-Box.git",
+         "web" : "https://github.com/cthulhuology/Storage-Box"
+      }
+   },
    "version" : "0.01",
    "x_contributors" : [
       "Dave Goehrig <dave@bestpractical.com>"

@@ -10,6 +10,8 @@ Storage::Box - Blah blah blah
 
 Storage::Box is 
 
+# METHODS
+
 # AUTHOR
 
 Dave Goehrig &lt;dave@dloh.org>

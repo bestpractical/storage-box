@@ -31,6 +31,8 @@ use Expect;
 use Data::UUID;
 use HTTP::Request;
 use LWP::UserAgent;
+use Crypt::PK::RSA;
+use JSON qw/ decode_json /;
 
 =pod
 
@@ -117,15 +119,14 @@ B<private_key($keyfile)>
 =cut
 
 sub private_key {
-    my ($keyfile) = @_;
-    open my $fh, "< $keyfile" or die "Failed to open $keyfile\n";
-    local $/ = undef;
-    Crypt::OpenSSL::RSA->new_private_key(<$fh>);
+    my ($keyfile,$password) = @_;
+        print "opening $keyfile with $password\n";
+    Crypt::PK::RSA->new($keyfile,$password);
 }
 
 =pod
 
-B<enterprise($password,$kid,$keyfile,$clientid,$entperpriseid)>
+B<enterprise($kid,$keyfile,$password,$clientid,$entperpriseid)>
 
     Creates a JWT assertion for an enterprise account.
 
@@ -138,22 +139,23 @@ B<enterprise($password,$kid,$keyfile,$clientid,$entperpriseid)>
 =cut
 
 sub enterprise {
-    my ($password,$kid,$keyfile,$clientid,$entperpriseid) = @_;
+    my ($kid,$keyfile,$password,$clientid,$enterpriseid) = @_;
     my $ug = Data::UUID->new;
     my $jti = $ug->to_b64string($ug->create);
+    my $time = time;
     my %claims = (
         iss => $clientid,
         sub => $enterpriseid,
         box_sub_type => "enterprise",
         aud => "https://api.box.com/oauth2/token",
+        exp => $time + 60,
+        iat => $time,
         jti => $jti
     );
     Crypt::JWT::encode_jwt( 
         alg => "RS256",
         payload => \%claims,
-        auto_iat => 1,
-        relative_exp =>1,
-        key => private_key($keyfile),
+        key => $keyfile,
         keypass => $password,
         extra_headers =>  { kid => $kid },
     );
@@ -174,22 +176,23 @@ B<user($password,$kid,$keyfile,$clientid,$userid)>
 =cut
 
 sub user {
-    my ($password,$kid,$keyfile,$clientid,$entperpriseid) = @_;
+    my ($kid,$keyfile,$password,$clientid,$userid) = @_;
     my $ug = Data::UUID->new;
     my $jti = $ug->to_b64string($ug->create);
+    my $time = time;
     my %claims = (
         iss => $clientid,
         sub => $userid,
         box_sub_type => "user",
         aud => "https://api.box.com/oauth2/token",
+        exp => $time + 60,
+        iat => $time,
         jti => $jti
     );
     Crypt::JWT::encode_jwt( 
         alg => "RS256",
         payload => \%claims,
-        auto_iat => 1,
-        relative_exp =>1,
-        key => private_key($keyfile),
+        key => $keyfile,
         keypass => $password,
         extra_headers =>  { kid => $kid },
     );
@@ -214,8 +217,8 @@ sub request {
         "client_secret=$secret"
     );
     my $ua = LWP::UserAgent->new;
-    my $resp = $ua->request($req);
-    
+    my $response = $ua->request($req);
+    decode_json $response->content;
 }
 
 

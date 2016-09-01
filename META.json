@@ -1,5 +1,5 @@
 {
-   "abstract" : "Blah blah blah",
+   "abstract" : "a module for managing storage at Box.com",
    "author" : [
       "Dave Goehrig <dave@dloh.org>"
    ],
@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : 2
    },
-   "name" : "Storage-Box",
+   "name" : "storage-box",
    "no_index" : {
       "directory" : [
          "eg",
@@ -40,31 +40,23 @@
             "Crypt::JWT" : "0.017",
             "Data::UUID" : "1.221",
             "Expect" : "1.15",
-            "HTTP::Request" : "6.11",
+            "JSON" : "2.90",
             "Modern::Perl" : "1.20150127",
+            "WWW::Curl" : "4.17",
             "perl" : "5.008005"
          }
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0.96"
+            "Test::More" : "0.96",
+            "Test::Pod" : "0"
          }
       }
    },
    "release_status" : "stable",
-   "resources" : {
-      "bugtracker" : {
-         "web" : "https://github.com/cthulhuology/Storage-Box/issues"
-      },
-      "homepage" : "https://github.com/cthulhuology/Storage-Box",
-      "repository" : {
-         "type" : "git",
-         "url" : "https://github.com/cthulhuology/Storage-Box.git",
-         "web" : "https://github.com/cthulhuology/Storage-Box"
-      }
-   },
    "version" : "0.01",
    "x_contributors" : [
+      "Dave Goehrig <=>",
       "Dave Goehrig <dave@bestpractical.com>"
    ],
    "x_serialization_backend" : "Cpanel::JSON::XS version 3.0217"

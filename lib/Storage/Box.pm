@@ -48,6 +48,7 @@ It provides a JWT authenticated cleint for a server side application.
 has key_id => '';
 has enterprise_id => '';
 has public_key => '';
+has private_key => '';
 has password => '';
 has client_id => '';
 has client_secret => '';
@@ -81,7 +82,7 @@ sub authenticate_enterprise {
     my $self = shift;    
     $self->enterprise_auth('') if ($self->enterprise_auth and 
         $self->enterprise_auth->expired);
-    unless ($self->enterprise_auth) {
+     if ($self->enterprise_auth eq '') {
         $self->enterprise_auth( Storage::Box::Auth->new(
             key_id => $self->key_id,
             enterprise_id => $self->enterprise_id,
@@ -90,7 +91,7 @@ sub authenticate_enterprise {
             client_id => $self->client_id,
             client_secret => $self->client_secret
         ));
-        $self->enterprise_auth->request;
+        $self->enterprise_auth->enterprise->request;
     }
     $self;
 }
@@ -122,7 +123,7 @@ sub authenticate_user {
     my $self = shift;    
     $self->user_auth('') if ($self->user_auth and 
         $self->user_auth->expired);
-    unless($self->user_auth) {
+    if ($self->user_auth eq '') {
         $self->user_auth( Storage::Box::Auth->new(
             key_id => $self->key_id,
             user_id => $self->user_id,
@@ -131,7 +132,7 @@ sub authenticate_user {
             client_id => $self->client_id,
             client_secret => $self->client_secret
         ));
-        $self->user_auth->request;
+        $self->user_auth->user->request;
     }
     $self;
 }
@@ -153,7 +154,8 @@ sub create_user {
         auth => $self->enterprise_auth,
         name => $name
     );
-    $user->create;
+    $user->create();
+    $user->id;
 }
 
 =pod
@@ -232,7 +234,7 @@ sub create_file {
         name => $filename
     );
     $file->create;
-    $file;
+    $file->id;
 }
 
 =pod

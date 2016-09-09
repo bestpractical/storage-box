@@ -42,6 +42,7 @@
             "Expect" : "1.15",
             "JSON" : "2.90",
             "Modern::Perl" : "1.20150127",
+            "Object::Simple" : "3.1702",
             "WWW::Curl" : "4.17",
             "perl" : "5.008005"
          }

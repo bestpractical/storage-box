@@ -119,7 +119,7 @@ It provides a JWT authenticated cleint for a server side application.
 
 # AUTHOR
 
-Dave Goehrig <dave@dloh.org>
+Dave Goehrig &lt;dave@dloh.org>
 
 # COPYRIGHT
 

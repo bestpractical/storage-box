@@ -1,5 +1,6 @@
 requires 'perl', '5.008005';
 
+requires 'Object::Simple','3.1702';
 requires 'Modern::Perl', '1.20150127';
 requires 'Crypt::JWT', '0.017';
 requires 'Expect', '1.15';

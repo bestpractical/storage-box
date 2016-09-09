@@ -36,6 +36,7 @@ has parent => '0';      # id of the parent folder, 0 is top level default
 has auth => '';         # Storage::Box::Auth object
 
 =pod
+
 B<create($user_token,$name,$parent,$filename)>
 
   Creates a new File with the given name in the specified parent Folder.
@@ -51,9 +52,13 @@ sub create {
     $req->field('attributes',"{\"name\":\"" . $self->name . "\",\"parent\":{\"id\":\"" . $self->parent . "\"}}");
     $req->file($self->name);
     $req->post->request;
-    return $self unless ($req->code == 201);
+    return $self unless ($req->code == 201 || $req->code == 409);
     my $json = decode_json($req->body);
-    $self->id($json->{entries}[0]->{id});   # update our id
+    if ($req->code == 201) {
+	$self->id($json->{entries}[0]->{id});   # update our id
+    } elsif ($req->code == 409) {
+	$self->id($json->{context_info}->{conflicts}->{id});   # update our id to the existing file
+    }
     $self;
 }
 
@@ -67,11 +72,12 @@ B<download($token,$fileid)>
 
 sub download {
     my $self = shift;
+    my $file_id = $self->id;
     my $req = Storage::Box::Request->new(
-        url => "https://api.box.com/2.0/files/" . $self->id . "/content",
+        url => "https://api.box.com/2.0/files/$file_id/content",
         auth => $self->auth
     );
-    $req->get->perform;
+    $req->get->request;
     $req->body;
 }
  
@@ -81,7 +87,7 @@ sub delete {
         url => "https://api.box.com/2.0/files/" . $self->id,
         auth => $self->auth
     );
-    $req->delete->perform;
+    $req->delete->request;
     $req->code == 200 || $req->code == 404;
 }
 

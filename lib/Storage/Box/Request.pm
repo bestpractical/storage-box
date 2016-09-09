@@ -100,7 +100,6 @@ sub file {
     my $self = shift;
     my $filename = shift;
     $self->form( WWW::Curl::Form->new() ) unless $self->form;
-    $self->form->formadd('attributes',"{\"name\":\"" . $self->name . "\",\"parent\":{\"id\":\"" . $self->parent . "\"}}");
     $self->form->formaddfile($filename, 'attachment', "multipart/form-data");
     $self;
 }

@@ -1,30 +1,29 @@
 #!/usr/bin/env perl
-
+#
 use lib 'lib';
-
+use Data::Dumper;
+use Storage::Box::File;
 use Storage::Box::Auth;
-use Storage::Box::User;
 
-my ($username,$enterprise_id) = @ARGV;
-
-$enterprise_id ||= '2064336';
+my ($user_id,$file_id) = @ARGV;
 
 my $auth = Storage::Box::Auth->new(
 	key_id => "vmqys6db",
-	enterprise_id => $enterprise_id,
+	user_id => $user_id,
 	public_key => "keys/public_key.pem",
 	private_key => "keys/private_key.pem",
 	password => "test",
 	client_id => "96o6g1e6mot3j1ord2qq6ptvxcsbn4oh",
 	client_secret => "xhp3us3rX3kNLvMt9y3DcGSasqP6Orl3");
 
-$auth->enterprise->request;
+$auth->user->request;
 
-my $user = Storage::Box::User->new(
-	name => $username,
-	auth => $auth
+my $file = Storage::Box::File->new(
+	auth => $auth,
+	id => $file_id
 );
 
-$user->create;
+open my $fh, "> $file_id" or die "couldnt write to file $!\n";
+print $fh $file->download;
+close $fh;
 
-print $user->id, "\n";

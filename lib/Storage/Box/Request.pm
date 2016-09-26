@@ -98,7 +98,7 @@ sub request {
     $self->code($self->curl->getinfo(CURLINFO_RESPONSE_CODE));
     $logger->info("Request to " . $self->url . " returned status  " . $self->code . "\n");
     $self->body($body);
-    $logger->debug("Response: " . $self->body . "\n");
+    $logger->debug("Response: " . substr($self->body,0,1024) .  ( length($self->body) > 1024 ? " (truncated)\n" : "\n"));
     $self;
 }
 

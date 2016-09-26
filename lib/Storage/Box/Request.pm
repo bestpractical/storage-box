@@ -41,7 +41,7 @@ our $logger = Storage::Box::Logger::logger;
 sub get {
     my $self = shift;
     $self->curl( WWW::Curl::Easy->new() ) unless $self->curl;
-    $logger->debug("GET $self->url\n");
+    $logger->debug("GET " . $self->url . "\n");
     $self;
 }
 
@@ -49,7 +49,7 @@ sub post {
     my $self = shift;
     $self->curl( WWW::Curl::Easy->new() ) unless $self->curl;
     $self->curl->setopt(CURLOPT_POST, 1);
-    $logger->debug("POST $self->url\n");
+    $logger->debug("POST " . $self->url . "\n");
     $self;
 }
 
@@ -57,7 +57,7 @@ sub put {
     my $self = shift;
     $self->curl( WWW::Curl::Easy->new() ) unless $self->curl;
     $self->curl->setopt(CURLOPT_CUSTOMREQUEST,"PUT");
-    $logger->debug("PUT $self->url\n");
+    $logger->debug("PUT " . $self->url . "\n");
     $self;
 }
 
@@ -65,7 +65,7 @@ sub delete {
     my $self = shift;
     $self->curl( WWW::Curl::Easy->new() ) unless $self->curl;
     $self->curl->setopt(CURLOPT_CUSTOMREQUEST,"DELETE");
-    $logger->debug("DELETE $self->url\n");
+    $logger->debug("DELETE " . $self->url . "\n");
     $self;
 }
 
@@ -73,7 +73,7 @@ sub request {
     my $self = shift;
     $self->curl( WWW::Curl::Easy->new() ) unless $self->curl;
     my $auth = $self->auth->token();
-    $self->warn("No authorization token for request $self->url") unless $auth;
+    $self->warn("No authorization token for request " . $self->url) unless $auth;
     my $headers = [
         "Accept: */*",
         "Authorization: Bearer " . $auth
@@ -85,20 +85,20 @@ sub request {
     $self->curl->setopt(CURLOPT_URL,$self->url);
     $self->curl->setopt(CURLOPT_HTTPPOST,$self->form) if ($self->form ne ''); 
     if ($self->curl->perform) {  # CURLE_OK is 0
-        $logger->warn("Curl to $self->url failed, retrying $self->retries\n");
+        $logger->warn("Curl to " . $self->url . " failed, retrying  " . $self->retries . "\n");
         if ( ++$self->retries < $self->max_retries) {
             sleep 1;
             return $self->request;
         }
-        $logger->error("Curl exceeded max tries to $self->url\n");
+        $logger->error("Curl exceeded max tries to " . $self->url . "\n");
         $self->retries(0);
         $self->body('');    # fail with empty body
         return $self;
     }
     $self->code($self->curl->getinfo(CURLINFO_RESPONSE_CODE));
-    $logger->info("Request to $self->url returned status $self->code\n");
+    $logger->info("Request to " . $self->url . " returned status  " . $self->code . "\n");
     $self->body($body);
-    $logger->debug("Response: $self->body\n");
+    $logger->debug("Response: " . $self->body . "\n");
     $self;
 }
 

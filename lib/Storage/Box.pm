@@ -95,7 +95,7 @@ sub authenticate_enterprise {
             client_secret => $self->client_secret
         ));
         my $req = $self->enterprise_auth->enterprise->request;
-        $logger->error("Failed to authenticate $self->enterprise_id with code $req->code\n") 
+        $logger->error("Failed to authenticate " . $self->enterprise_id . " with code " . $req->code . "\n") 
             unless $req->code == 200;
     }
     $self;

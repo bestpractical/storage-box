@@ -8,8 +8,10 @@ use Storage::Box::Auth;
 use Storage::Box::User;
 use Storage::Box::File;
 use Storage::Box::Folder;
+use Storage::Box::Logger;
 
 our $VERSION = '0.01';
+our $logger = Storage::Box::Logger::logger;
 
 =pod 
 
@@ -56,6 +58,7 @@ has user_id => '';
 has enterprise_auth => '';
 has user_auth => '';
 has user => '';
+has logger => '';
 
 =pod
 
@@ -91,7 +94,9 @@ sub authenticate_enterprise {
             client_id => $self->client_id,
             client_secret => $self->client_secret
         ));
-        $self->enterprise_auth->enterprise->request;
+        my $req = $self->enterprise_auth->enterprise->request;
+        $logger->error("Failed to authenticate $self->enterprise_id with code $req->code\n") 
+            unless $req->code == 200;
     }
     $self;
 }
@@ -132,7 +137,9 @@ sub authenticate_user {
             client_id => $self->client_id,
             client_secret => $self->client_secret
         ));
-        $self->user_auth->user->request;
+        my $req = $self->user_auth->user->request;
+        $logger->error("Failed to authenticate user $self->user_id, with code $req->code\n")
+            unless $req->code == 200;
     }
     $self;
 }
@@ -343,7 +350,7 @@ Dave Goehrig E<lt>dave@dloh.orgE<gt>
 
 =head1 COPYRIGHT
 
-Copyright 2016- Dave Goehrig
+Copyright (C) 2016 Dave Goehrig
 
 =head1 LICENSE
 

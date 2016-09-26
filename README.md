@@ -123,7 +123,7 @@ Dave Goehrig &lt;dave@dloh.org>
 
 # COPYRIGHT
 
-Copyright 2016- Dave Goehrig
+Copyright (C) 2016 Dave Goehrig
 
 # LICENSE
 

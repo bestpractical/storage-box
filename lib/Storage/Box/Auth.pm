@@ -107,7 +107,8 @@ B<generate_keys($password)>
 =cut
 
 sub generate_keys {
-    my ($self) = @_;
+    my ($self,$password) = @_;
+    $self->password($password);
     $self->generate_private_key;
     $self->generate_public_key;
     print <<THERE;

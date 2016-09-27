@@ -10,7 +10,7 @@ use Storage::Box::File;
 use Storage::Box::Folder;
 use Storage::Box::Logger;
 
-our $VERSION = '0.01';
+our $VERSION = '0.03';
 our $logger = Storage::Box::Logger::logger;
 
 =pod 

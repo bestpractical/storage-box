@@ -234,7 +234,7 @@ sub request {
     
     if ($curl->perform || $curl->getinfo(CURLINFO_RESPONSE_CODE) != 200 ) {
         $self->code($curl->getinfo(CURLINFO_RESPONSE_CODE));
-        return $self 
+        return $self;
     }
 
     $self->code($curl->getinfo(CURLINFO_RESPONSE_CODE));

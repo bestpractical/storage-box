@@ -350,7 +350,7 @@ Dave Goehrig E<lt>dave@dloh.orgE<gt>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2016 Dave Goehrig
+Copyright (C) 2016 Best Practical Solutions, LLC.
 
 =head1 LICENSE
 

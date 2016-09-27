@@ -262,7 +262,7 @@ lots
 
 =head1 COPYRIGHT
 
-Best Practical LLC.
+Copyright (C) 2016 Best Practical Solutions, LLC.
 
 =head1 AUTHORS
 

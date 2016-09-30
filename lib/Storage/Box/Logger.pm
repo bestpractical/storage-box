@@ -43,7 +43,7 @@ dispatch all logging to the delegate.
 =cut
 
 use Exporter;
-@EXPORT = (logger);
+@EXPORT = qw(logger);
 
 our $debug;
 our $delegate;
@@ -62,7 +62,7 @@ sub logger {
 
 sub new {
 	my $class = shift;
-	my $self = @_ ? ( @_ > 1 ? { @_ } : { %$_[0] } ) : {};
+	my $self = @_ ? ( @_ > 1 ? { @_ } : { %{ $_[0] } } ) : {};
 	bless $self, ref $class || $class;
 }
 

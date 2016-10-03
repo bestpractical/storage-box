@@ -41,7 +41,20 @@ Storage::Box - a module for managing storage at Box.com
 Storage::Box is module for interfacing with Box.com's REST API.
 It provides a JWT authenticated cleint for a server side application.
 
+=head1 INSTALLATION
 
+Note that L<Storage::Box> has several required dependencies, so check
+the installer output if you have problems installing. L<WWW::Curl>
+requires the C<libcurl> libraries to install correctly. If this dependent
+module installation is failing, install the appropriate C<libcurl> packages
+on your system.
+
+Steps to install manually:
+
+    perl Makefile.PL
+    make
+    make test
+    make install
 
 =head1 METHODS
 

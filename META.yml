@@ -1,0 +1,31 @@
+---
+abstract: 'a module for managing storage at Box.com'
+author:
+  - 'Dave Goehrig <dave@dloh.org>'
+build_requires:
+  ExtUtils::MakeMaker: 6.36
+configure_requires:
+  ExtUtils::MakeMaker: 6.36
+distribution_type: module
+dynamic_config: 1
+generated_by: 'Module::Install version 1.16'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Storage-Box
+no_index:
+  directory:
+    - inc
+    - t
+requires:
+  Crypt::JWT: '0.017'
+  Data::UUID: '1.221'
+  Expect: '1.15'
+  JSON: '2.90'
+  Modern::Perl: '1.20150127'
+  Object::Simple: '3.1702'
+  WWW::Curl: '4.17'
+resources:
+  license: http://dev.perl.org/licenses/
+version: '0.03'

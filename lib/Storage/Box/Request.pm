@@ -73,7 +73,7 @@ sub request {
     my $self = shift;
     $self->curl( WWW::Curl::Easy->new() ) unless $self->curl;
     my $auth = $self->auth->token();
-    $self->warn("No authorization token for request " . $self->url) unless $auth;
+    $logger->warn("No authorization token for request " . $self->url) unless $auth;
     my $headers = [
         "Accept: */*",
         "Authorization: Bearer " . $auth
